@@ -11,6 +11,5 @@ describe("Testing Guru99 Bank", () => {
         cy.url().should("include", "/manager/Managerhomepage.php");
         
     })
-
-
+    
 })
