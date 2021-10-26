@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe("Testing Fund Transfer functionality ", () => {
+describe("Testing Change Password functionality ", () => {
 
     before("Login as Menager", () => {
 
