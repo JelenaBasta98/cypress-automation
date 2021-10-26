@@ -2,7 +2,7 @@
 
 describe("Verify Date of Birth field", () => {
 
-    before("Login as Menager and enter Customer Name", () => {
+    before("Login as Menager and click on New Customer", () => {
 
         cy.visit("http://demo.guru99.com/V4/");
         cy.get('input[name="uid"]').type("mngr358461");
@@ -10,8 +10,7 @@ describe("Verify Date of Birth field", () => {
         cy.get('input[name="btnLogin"]').click();
         cy.url().should("include", "/manager/Managerhomepage.php");
         cy.contains("New Customer").click();
-        cy.url().should("include", "/addcustomerpage.php");
-        cy.get('input[name="name"]').type("Ime"); 
+        cy.url().should("include", "/addcustomerpage.php"); 
     })
     it("Date of Birth field cannot be blank", () => {
 
