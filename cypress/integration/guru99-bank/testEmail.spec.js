@@ -14,8 +14,7 @@ describe("Verify E-mail field", () => {
     })
     it("E-mail field cannot be blank", () => {
 
-        cy.get('input[name="emailid"]').click();
-        cy.get('input[name="telephoneno"]').type("5885888");
+        cy.get('input[name="emailid"]').type('{enter}');
         cy.get('label[id="message9"]').should("have.text", "Email-ID must not be blank");
     })
     it("E-mail field cannot have special characters", () => {
