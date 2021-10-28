@@ -1,21 +1,24 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../../pages/login-page";
+import ManagerPage from "../../pages/manager-page";
+import NewCustomerPage from "../../pages/new-customer-page";
+
 describe("Verify Date of Birth field", () => {
 
     before("Login as Menager and click on New Customer", () => {
-
         cy.visit("http://demo.guru99.com/V4/");
-        cy.get('input[name="uid"]').type("mngr358461");
-        cy.get('input[name="password"]').type("$ifra0109");
-        cy.get('input[name="btnLogin"]').click();
-        cy.url().should("include", "/manager/Managerhomepage.php");
-        cy.contains("New Customer").click();
-        cy.url().should("include", "/addcustomerpage.php"); 
+        LoginPage.typeUid("mngr358461");
+        LoginPage.typePassword("$ifra0109");
+        LoginPage.clickLogin();
+        cy.url().should("include", "/manager/Managerhomepage.php");   
+        ManagerPage.elements.newCustomer();
+        cy.url().should("include", "/addcustomerpage.php");
     })
-    it("Date of Birth field cannot be blank", () => {
 
-        cy.get('input[name="dob"]').click();
-        cy.get('input[name="city"]').type("Grad");
-        cy.get('label[id="message24"]').should("have.text", "Date Field must not be blank");
+    it("Date of Birth field cannot be blank", () => {
+        NewCustomerPage.elements.dateOfBirth().click();
+        NewCustomerPage.typeCity("Grad");
+        NewCustomerPage.elements.message3().should("have.text", "Date Field must not be blank");
     })
 })

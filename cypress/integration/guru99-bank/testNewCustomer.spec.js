@@ -1,32 +1,33 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../../pages/login-page";
+import ManagerPage from "../../pages/manager-page";
+import NewCustomerPage from "../../pages/new-customer-page";
+
 describe("Testing Creating New Customer functionality", () => {
 
     before("Login as Menager", () => {
-
         cy.visit("http://demo.guru99.com/V4/");
-        cy.get('input[name="uid"]').type("mngr358461");
-        cy.get('input[name="password"]').type("sUvUbeq");
-        cy.get('input[name="btnLogin"]').click();
+        LoginPage.typeUid("mngr358461");
+        LoginPage.typePassword("$ifra0109");
+        LoginPage.clickLogin();
         cy.url().should("include", "/manager/Managerhomepage.php"); 
     })
-    it("Create New Customer", () => {
 
-        cy.contains("New Customer").click();
+    it("Create New Customer", () => {
+        ManagerPage.elements.newCustomer();
         cy.url().should("include", "/manager/addcustomerpage.php");
-        cy.get('input[name="name"]').type("Nekoihejje");
-        cy.get('input[name="dob"]').type("2021-10-25");
-        cy.get('textarea[name="addr"]').type("Moja Adressa 2");
-        cy.get('input[name="city"]').type("Grad");
-        cy.get('input[name="state"]').type("Drzava");
-        cy.get('input[name="pinno"]').type("123466");
-        cy.get('input[name="telephoneno"]').type("556599");
-        cy.get('input[name="emailid"]').type("nekoi5599jje86@gmail.com");
-        cy.get('input[name="password"]').type("sifra123");
-        cy.get('input[value="Submit"]').click();
-        cy.get('.heading3').should("have.text", "Customer Registered Successfully!!!");         
+        NewCustomerPage.typeCustomerName("Nekoihejje");
+        NewCustomerPage.typedateOfBirth("2021-10-25");
+        NewCustomerPage.typeAddress("Moja Adressa 2");
+        NewCustomerPage.typeCity("Grad");
+        NewCustomerPage.typeState("Drzava");
+        NewCustomerPage.typePin("123466");
+        NewCustomerPage.typeMobileNumber("556599");
+        NewCustomerPage.typeEmail("neki59jje86@gmail.com");
+        NewCustomerPage.typePassword("sifra123");
+        NewCustomerPage.clickSubmit();
+        NewCustomerPage.elements.message1().should("have.text", "Customer Registered Successfully!!!");         
         //.contains("Customer Registered Successfully!!!");
     })
-
-
 })

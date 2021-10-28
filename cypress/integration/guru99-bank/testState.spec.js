@@ -1,36 +1,39 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../../pages/login-page";
+import ManagerPage from "../../pages/manager-page";
+import NewCustomerPage from "../../pages/new-customer-page";
+
 describe("Verify State field", () => {
 
     beforeEach("Login as Menager and click on New Customer", () => {
-
         cy.visit("http://demo.guru99.com/V4/");
-        cy.get('input[name="uid"]').type("mngr358461");
-        cy.get('input[name="password"]').type("$ifra0109");
-        cy.get('input[name="btnLogin"]').click();
-        cy.url().should("include", "/manager/Managerhomepage.php");
-        cy.contains("New Customer").click();
+        LoginPage.typeUid("mngr358461");
+        LoginPage.typePassword("$ifra0109");
+        LoginPage.clickLogin();
+        cy.url().should("include", "/manager/Managerhomepage.php");   
+        ManagerPage.elements.newCustomer();
         cy.url().should("include", "/addcustomerpage.php");
     })
+
     it("State field cannot be blank", () => {
-
-        cy.get('input[name="state"]').click();
-        cy.get('input[name="pinno"]').type("112233");
-        cy.get('label[id="message5"]').should("have.text", "State must not be blank");
+        NewCustomerPage.elements.state().click();
+        NewCustomerPage.typePin("112233");
+        NewCustomerPage.elements.message6().should("have.text", "State must not be blank");
     })
+
     it("State field cannot have special characters", () => {
-
-        cy.get('input[name="state"]').type("##");
-        cy.get('label[id="message5"]').should("have.text", "Special characters are not allowed");
+        NewCustomerPage.typeState("##");
+        NewCustomerPage.elements.message6().should("have.text", "Special characters are not allowed");
     })
+
     it("State field cannot have space as first character", () => {
-
-        cy.get('input[name="state"]').type(" Grad");
-        cy.get('label[id="message5"]').should("have.text", "First character can not have space");
+        NewCustomerPage.typeState(" Grad");
+        NewCustomerPage.elements.message6().should("have.text", "First character can not have space");
     })
-    it("State field cannot have numbers", () => {
 
-        cy.get('input[name="state"]').type("123");
-        cy.get('label[id="message5"]').should("have.text", "Numbers are not allowed");
+    it("State field cannot have numbers", () => {
+        NewCustomerPage.typeState("123");
+        NewCustomerPage.elements.message6().should("have.text", "Numbers are not allowed");
     })
 })
