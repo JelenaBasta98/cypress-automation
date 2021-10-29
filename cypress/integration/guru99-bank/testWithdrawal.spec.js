@@ -1,23 +1,26 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../../pages/login-page";
+import ManagerPage from "../../pages/manager-page";
+import WithdrawalPage from "../../pages/withdrawal-page";
+
 describe("Testing Withdrawal functionality ", () => {
 
     before("Login as Menager", () => {
-
         cy.visit("http://demo.guru99.com/V4/");
-        cy.get('input[name="uid"]').type("mngr358461");
-        cy.get('input[name="password"]').type("sUvUbeq");
-        cy.get('input[name="btnLogin"]').click();
+        LoginPage.typeUid("mngr358461");
+        LoginPage.typePassword("$ifra0109");
+        LoginPage.clickLogin();
         cy.url().should("include", "/manager/Managerhomepage.php"); 
     })
-    it("Withdraw money from the bank", () => {
 
-        cy.contains("Withdrawal").click();
+    it("Withdraw money from the bank", () => {
+        ManagerPage.elements.withdrawal();
         cy.url().should("include", "/manager/WithdrawalInput.php");
-        cy.get('input[name="accountno"]').type("99800");
-        cy.get('input[name="ammount"]').type("10000");
-        cy.get('input[name="desc"]').type("withdraw");
-        cy.get('input[name="AccSubmit"]').click();
-        cy.get('.heading3').should("have.text", "Transaction details of Withdrawal for Account 99800");
+        WithdrawalPage.typeAccountNo("99800");
+        WithdrawalPage.typeAmount("10000");
+        WithdrawalPage.typeDescription("withdraw");
+        WithdrawalPage.clickSubmit();
+        WithdrawalPage.elements.message().should("have.text", "Transaction details of Withdrawal for Account 99800");
     })
 })
