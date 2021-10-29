@@ -1,20 +1,23 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../../pages/login-page";
+import ManagerPage from "../../pages/manager-page";
+import DeleteAccountPage from "../../pages/delete-account-page";
+
 describe("Testing Delete Account functionality ", () => {
 
     before("Login as Menager", () => {
-
         cy.visit("http://demo.guru99.com/V4/");
-        cy.get('input[name="uid"]').type("mngr358461");
-        cy.get('input[name="password"]').type("sUvUbeq");
-        cy.get('input[name="btnLogin"]').click();
+        LoginPage.typeUid("mngr358461");
+        LoginPage.typePassword("$ifra0109");
+        LoginPage.clickLogin();
         cy.url().should("include", "/manager/Managerhomepage.php"); 
     })
-    it("Delete Account", () => {
 
-        cy.contains("Delete Account").click();
+    it("Delete Account", () => {
+        ManagerPage.elements.deleteAccount();
         cy.url().should("include", "/manager/deleteAccountInput.php");
-        cy.get('input[name="accountno"]').type("90841");
-        cy.get('input[name="AccSubmit"]').click();
+        DeleteAccountPage.typeAccountNo("90841");
+        DeleteAccountPage.clickSubmit();
     })
 })
