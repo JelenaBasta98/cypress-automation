@@ -15,7 +15,7 @@ describe("Testing Customized Statement Form functionality ", () => {
     })
 
     it("Customized Statement Form for Account No 99800", () => {
-       ManagerPage.elements.customisedStatement();
+        ManagerPage.elements.customisedStatement();
         cy.url().should("include", "/manager/CustomisedStatementInput.php");
         CustomisedStatementPage.typeAccountNo("99800");
         CustomisedStatementPage.typeFromDate("2021-10-20");
