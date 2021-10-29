@@ -1,35 +1,38 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../../pages/login-page";
+import ManagerPage from "../../pages/manager-page";
+import NewCustomerPage from "../../pages/new-customer-page";
+
 describe("Verify E-mail field", () => {
 
     beforeEach("Login as Menager and click on New Customer", () => {
-
         cy.visit("http://demo.guru99.com/V4/");
-        cy.get('input[name="uid"]').type("mngr358461");
-        cy.get('input[name="password"]').type("$ifra0109");
-        cy.get('input[name="btnLogin"]').click();
-        cy.url().should("include", "/manager/Managerhomepage.php");
-        cy.contains("New Customer").click();
+        LoginPage.typeUid("mngr358461");
+        LoginPage.typePassword("$ifra0109");
+        LoginPage.clickLogin();
+        cy.url().should("include", "/manager/Managerhomepage.php");   
+        ManagerPage.elements.newCustomer();
         cy.url().should("include", "/addcustomerpage.php");
     })
+
     it("E-mail field cannot be blank", () => {
-
-        cy.get('input[name="emailid"]').type('{enter}');
-        cy.get('label[id="message9"]').should("have.text", "Email-ID must not be blank");
+        NewCustomerPage.typeEmail('{enter}');
+        NewCustomerPage.elements.message9().should("have.text", "Email-ID must not be blank");
     })
+
     it("E-mail field cannot have special characters", () => {
-
-        cy.get('input[name="emailid"]').type("##");
-        cy.get('label[id="message9"]').should("have.text", "Email-ID is not valid");
+        NewCustomerPage.typeEmail("##");
+        NewCustomerPage.elements.message9().should("have.text", "Email-ID is not valid");
     })
+
     it("E-mail field cannot have space as first character", () => {
-
-        cy.get('input[name="emailid"]').type(" ime98@hmail.com");
-        cy.get('label[id="message9"]').should("have.text", "First character can not have space");
+        NewCustomerPage.typeEmail(" ime98@hmail.com");
+        NewCustomerPage.elements.message9().should("have.text", "First character can not have space");
     })
-    it("E-mail field must have @", () => {
 
-        cy.get('input[name="emailid"]').type("nekoimegmail.com");
-        cy.get('label[id="message9"]').should("have.text", "Email-ID is not valid");
+    it("E-mail field must have @", () => {
+        NewCustomerPage.typeEmail("nekoimegmail.com");
+        NewCustomerPage.elements.message9().should("have.text", "Email-ID is not valid");
     })
 })

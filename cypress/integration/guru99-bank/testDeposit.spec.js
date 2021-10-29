@@ -1,23 +1,26 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../../pages/login-page";
+import ManagerPage from "../../pages/manager-page";
+import DepositPage from "../../pages/deposit-page";
+
 describe("Testing Deposit functionality ", () => {
 
     before("Login as Menager", () => {
-
         cy.visit("http://demo.guru99.com/V4/");
-        cy.get('input[name="uid"]').type("mngr358461");
-        cy.get('input[name="password"]').type("sUvUbeq");
-        cy.get('input[name="btnLogin"]').click();
+        LoginPage.typeUid("mngr358461");
+        LoginPage.typePassword("$ifra0109");
+        LoginPage.clickLogin();
         cy.url().should("include", "/manager/Managerhomepage.php"); 
     })
-    it("Give a Deposit to the bank", () => {
 
-        cy.contains("Deposit").click();
+    it("Give a Deposit to the bank", () => {
+        ManagerPage.elements.deposit();
         cy.url().should("include", "/manager/DepositInput.php");
-        cy.get('input[name="accountno"]').type("99800");
-        cy.get('input[name="ammount"]').type("50000");
-        cy.get('input[name="desc"]').type("deposit");
-        cy.get('input[name="AccSubmit"]').click();
-        cy.get('.heading3').should("have.text", "Transaction details of Deposit for Account 99800");
+        DepositPage.typeAccountNo("99800");
+        DepositPage.typeAmount("50000");
+        DepositPage.typeDescription("deposit");
+        DepositPage.clickSubmit();
+        DepositPage.elements.message().should("have.text", "Transaction details of Deposit for Account 99800");
     })
 })

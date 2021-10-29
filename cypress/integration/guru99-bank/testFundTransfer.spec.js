@@ -1,24 +1,27 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../../pages/login-page";
+import ManagerPage from "../../pages/manager-page";
+import FundTransferPage from "../../pages/fund-transfer-page";
+
 describe("Testing Fund Transfer functionality ", () => {
 
     before("Login as Menager", () => {
-
         cy.visit("http://demo.guru99.com/V4/");
-        cy.get('input[name="uid"]').type("mngr358461");
-        cy.get('input[name="password"]').type("sUvUbeq");
-        cy.get('input[name="btnLogin"]').click();
+        LoginPage.typeUid("mngr358461");
+        LoginPage.typePassword("$ifra0109");
+        LoginPage.clickLogin();
         cy.url().should("include", "/manager/Managerhomepage.php"); 
     })
-    it("Fund Transfer between two accounts", () => {
 
-        cy.contains("Fund Transfer").click();
+    it("Fund Transfer between two accounts", () => {
+        ManagerPage.elements.fundTransfer();
         cy.url().should("include", "/manager/FundTransInput.php");
-        cy.get('input[name="payersaccount"]').type("99800");
-        cy.get('input[name="payeeaccount"]').type("99804");
-        cy.get('input[name="ammount"]').type("10");
-        cy.get('input[name="desc"]').type("transfer");
-        cy.get('input[name="AccSubmit"]').click();
-        cy.get('.heading3').should("have.text", "Fund Transfer DetailsContinue");
+        FundTransferPage.typePayersAccountNO("99800");
+        FundTransferPage.typePayeesAccountNo("99804");
+        FundTransferPage.typeAmount("10");
+        FundTransferPage.typeDescription("transfer");
+        FundTransferPage.clickSubmit();
+        FundTransferPage.elements.message().should("have.text", "Fund Transfer DetailsContinue");
     })
 })

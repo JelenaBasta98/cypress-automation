@@ -1,22 +1,25 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../../pages/login-page";
+import ManagerPage from "../../pages/manager-page";
+import NewAccountPage from "../../pages/new-account-page";
+
 describe("Testing New Account functionality ", () => {
 
     before("Login as Menager", () => {
-
         cy.visit("http://demo.guru99.com/V4/");
-        cy.get('input[name="uid"]').type("mngr358461");
-        cy.get('input[name="password"]').type("sUvUbeq");
-        cy.get('input[name="btnLogin"]').click();
-        cy.url().should("include", "/manager/Managerhomepage.php"); 
+        LoginPage.typeUid("mngr358461");
+        LoginPage.typePassword("$ifra0109");
+        LoginPage.clickLogin();
+        cy.url().should("include", "/manager/Managerhomepage.php");
     })
-    it("Create New Account", () => {
 
-        cy.contains("New Account").click();
+    it("Create New Account", () => {
+        ManagerPage.elements.newAccount();
         cy.url().should("include", "/manager/addAccount.php");
-        cy.get('input[name="cusid"]').type("79387");
-        cy.get('input[name="inideposit"]').type("10000");
-        cy.get('input[name="button2"]').click();
-        cy.get('.heading3').should("have.text", "Account Generated Successfully!!!");
+        NewAccountPage.typeCustomerID("79387");
+        NewAccountPage.typeInitialDeposit("10000");
+        NewAccountPage.clickSubmit();
+        NewAccountPage.elements.message().should("have.text", "Account Generated Successfully!!!");
     })
 })

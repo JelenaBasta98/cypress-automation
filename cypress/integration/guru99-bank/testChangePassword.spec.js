@@ -1,21 +1,24 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../../pages/login-page";
+import ManagerPage from "../../pages/manager-page";
+import ChangePasswordPage from "../../pages/change-password-page";
+
 describe("Testing Change Password functionality ", () => {
 
     before("Login as Menager", () => {
-
         cy.visit("http://demo.guru99.com/V4/");
-        cy.get('input[name="uid"]').type("mngr358461");
-        cy.get('input[name="password"]').type("sUvUbeq");
-        cy.get('input[name="btnLogin"]').click();
-        cy.url().should("include", "/manager/Managerhomepage.php"); 
+        LoginPage.typeUid("mngr358461");
+        LoginPage.typePassword("$ifra0109");
+        LoginPage.clickLogin();
+        cy.url().should("include", "/manager/Managerhomepage.php");
     })
-    it("Change Password", () => {
 
-        cy.contains("Change Password").click();
-        cy.get('input[name="oldpassword"]').type("sUvUbeq");
-        cy.get('input[name="newpassword"]').type("$ifra0109");
-        cy.get('input[name="confirmpassword"]').type("$ifra0109");
-        cy.get('input[value="Submit"]').click();
+    it("Change Password", () => {
+        ManagerPage.elements.changePassword();
+        ChangePasswordPage.typeOldPassword("sUvUbeq");
+        ChangePasswordPage.typeNewPassword("$ifra0109");
+        ChangePasswordPage.typeConfirmPassword("$ifra0109");
+        ChangePasswordPage.clickSubmith();
     })
 })

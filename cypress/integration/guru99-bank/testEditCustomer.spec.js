@@ -1,24 +1,24 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../../pages/login-page";
+import ManagerPage from "../../pages/manager-page";
+import EditCustomerPage from "../../pages/edit-customer-page";
+
 describe("Testing Edit Customer Form", () => {
 
     before("Login as Menager", () => {
-
         cy.visit("http://demo.guru99.com/V4/");
-        cy.get('input[name="uid"]').type("mngr358461");
-        cy.get('input[name="password"]').type("sUvUbeq");
-        cy.get('input[name="btnLogin"]').click();
+        LoginPage.typeUid("mngr358461");
+        LoginPage.typePassword("$ifra0109");
+        LoginPage.clickLogin();
         cy.url().should("include", "/manager/Managerhomepage.php"); 
     })
+
     it("Edit Customer", () => {
-
-        cy.contains("Edit Customer").click();
+        ManagerPage.elements.editCustomer();
         cy.url().should("include", "/manager/EditCustomer.php");
-        cy.get('input[name="cusid"]').type("79387");
-        cy.get('input[name="AccSubmit"]').click();
+        EditCustomerPage.typeCustomerID("79387");
+        EditCustomerPage.clickSubmit();
         cy.url().should("include", "/manager/editCustomerPage.php");
-
     })
-
-
 })
