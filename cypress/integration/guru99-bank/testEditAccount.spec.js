@@ -1,21 +1,24 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../../pages/login-page";
+import ManagerPage from "../../pages/manager-page";
+import EditAccountPage from "../../pages/edit-account-page";
+
 describe("Testing Edit Account functionality ", () => {
 
     before("Login as Menager", () => {
-
         cy.visit("http://demo.guru99.com/V4/");
-        cy.get('input[name="uid"]').type("mngr358461");
-        cy.get('input[name="password"]').type("sUvUbeq");
-        cy.get('input[name="btnLogin"]').click();
+        LoginPage.typeUid("mngr358461");
+        LoginPage.typePassword("$ifra0109");
+        LoginPage.clickLogin();
         cy.url().should("include", "/manager/Managerhomepage.php"); 
     })
-    it("Edit Account", () => {
 
-        cy.contains("Edit Account").click();
+    it("Edit Account", () => {
+        ManagerPage.elements.editAccount();
         cy.url().should("include", "/manager/editAccount.php");
-        cy.get('input[name="accountno"]').type("99800");
-        cy.get('input[name="AccSubmit"]').click();
-        cy.get('.heading3').should("have.text", "Edit Account Entry Form");
+        EditAccountPage.typeAccountNo("99800");
+        EditAccountPage.clickSubmit();
+        EditAccountPage.elements.message().should("have.text", "Edit Account Entry Form");
     })
 })
