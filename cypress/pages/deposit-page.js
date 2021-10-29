@@ -14,6 +14,7 @@ class DepositPage {
     typeAmount(value) {
         this.elements.amount().type(value);
     }
+    
     typeDescription(value) {
         this.elements.description().type(value);
     }
